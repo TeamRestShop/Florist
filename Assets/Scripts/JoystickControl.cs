@@ -23,8 +23,8 @@ public class JoystickControl : MonoBehaviour, IDragHandler, IPointerDownHandler,
     public void OnDrag(PointerEventData eventData)
     {
         var inputPosition = eventData.position - _pointPosition;
-        _pointTransform.anchoredPosition = inputPosition.magnitude > _pointRadius * MinRange
-            ? inputPosition.normalized * _pointRadius * MinRange : inputPosition;
+        _pointTransform.anchoredPosition = inputPosition.magnitude > _pointRadius * MaxRange
+            ? inputPosition.normalized * _pointRadius * MaxRange : inputPosition;
 
         joystickDirection.OnNext(Position2Direction(inputPosition));
     }
