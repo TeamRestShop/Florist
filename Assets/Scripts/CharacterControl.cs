@@ -19,6 +19,18 @@ public partial class CharacterControl : MonoBehaviour
             }
         }).AddTo(this);
     }
-    
-    
+
+    // DamageCollider
+    public void OnCollisionEnterInChildren(Collision2D other)
+    {
+        throw new NotImplementedException();
+        // ToDo : 피해
+    }
+
+    // ObjectCollider
+    public void OnTriggerEnterInChildren(Collider2D other)
+    {
+        throw new NotImplementedException();
+        // ToDo : 오브젝트 교환
+    }
 }
