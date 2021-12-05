@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestFlower : Flower //임시로 만든 꽃 종류
+public class TestFlowerAttack : Flower //임시로 만든 꽃 종류
 {
     [SerializeField] private float attackRange;
     [SerializeField] private float attackSpeed;
@@ -15,6 +15,7 @@ public class TestFlower : Flower //임시로 만든 꽃 종류
     public GameObject targetEnemy {get; set;} //현재 타겟팅하고 있는 적
 
     private bool isAttacking = false;
+    private bool isFainted = false; //CC 먹어서 기절 상태일때
 
     private void Start()
     {
@@ -27,7 +28,7 @@ public class TestFlower : Flower //임시로 만든 꽃 종류
         base.Update();
         targetEnemy = base.TargetEnemy(transform);
 
-        if(targetEnemy != null)
+        if(targetEnemy != null && !isFainted)
         {
             StartAttack();
         }
@@ -45,7 +46,6 @@ public class TestFlower : Flower //임시로 만든 꽃 종류
 
     public void StartAttack()
     {
-        Debug.Log("attack");
         if(!isAttacking && stage != FlowerStage.Seed)
         {
             StartCoroutine(Attack());
@@ -55,15 +55,15 @@ public class TestFlower : Flower //임시로 만든 꽃 종류
 
     IEnumerator Attack() 
     {
-        while(targetEnemy != null)
+        while(targetEnemy != null && !isFainted)
         {
-            Debug.Log("attack");
             GameObject attackInstance = Instantiate(attackObject, transform.position, Quaternion.identity);
             (attackInstance.GetComponent<AttackManager>() as AttackManager).targetObject = targetEnemy;
 
-            yield return new WaitForSeconds(1f/_attackSpeed);
+            yield return new WaitForSeconds(1f/_speed);
         }
 
+        isAttacking = false;
         yield break;
     }
 }

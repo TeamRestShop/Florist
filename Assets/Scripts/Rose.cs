@@ -61,7 +61,7 @@ public class Rose : Flower
             GameObject attackInstance = Instantiate(attackObject, transform.position, Quaternion.identity);
             (attackInstance.GetComponent<AttackManager>() as AttackManager).targetObject = targetEnemy;
 
-            yield return new WaitForSeconds(1f/_attackSpeed);
+            yield return new WaitForSeconds(1f/_speed);
         }
 
         yield break;

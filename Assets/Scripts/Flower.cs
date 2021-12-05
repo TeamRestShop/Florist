@@ -13,9 +13,9 @@ public class Flower : Singleton<Flower>
 {
     public FlowerStage stage {get; set;} //씨앗, 새싹, 꽃
 
-    public float _attackRange{get;set;} //공격범위
-    public float _attackSpeed{get;set;} //1초에 몇번 공격할 수 있는지; 공격속도
-    public float _attackAmount{get;set;} //공격력
+    public float _range{get;set;} //공격/지원 범위
+    public float _speed{get;set;} //1초에 몇번 공격/지원할 수 있는지
+    public float _amount{get;set;} //공격력/지원력
     public float _specialAttack{get;set;} //특수 공격 게이지
 
     private Sprite[] _stageSprite; //씨앗, 새싹, 꽃의 스프라이트
@@ -28,13 +28,14 @@ public class Flower : Singleton<Flower>
     private bool inSunlight = false;
 
     private float sunlightPercent = 0f; // 햇빛 게이지 0%~100%
-    private float sunlightChangeRate = 10f; //햇빞에 있거나 없으면 1초에 햇빛 게이지 몇퍼센트 변하는지
+    private float sunlightIncreaseRate = 10f; //햇빞에 있으면 1초에 햇빛 게이지 몇퍼센트 오르는지
+    private float sunlightDecreaseRate = 5f;
 
-    protected void InitStats(float attackRange, float attackSpeed, float attackAmount, float specialAttack, Sprite[] stageSprite)
+    protected void InitStats(float range, float speed, float amount, float specialAttack, Sprite[] stageSprite)
     {
-        _attackRange = attackRange;
-        _attackSpeed = attackSpeed;
-        _attackAmount = attackAmount;
+        _range = range;
+        _speed = speed;
+        _amount = amount;
         _specialAttack = specialAttack;
 
         _stageSprite = stageSprite;
@@ -46,19 +47,6 @@ public class Flower : Singleton<Flower>
 
         sunBarSprite = Resources.LoadAll<Sprite>("Sprite/tempObject/SunlightBar");
         Debug.Log(sunBarSprite.Length);
-
-        // sunBarSprite[0] = Resources.Load<Sprite>("Sprite/tempObject/SunlightBar/sunbar0");
-        // sunBarSprite[1] = Resources.Load<Sprite>("Sprite/tempObject/SunlightBar/sunbar1");
-        // sunBarSprite[2] = Resources.Load<Sprite>("Sprite/tempObject/SunlightBar/sunbar2");
-        // sunBarSprite[3] = Resources.Load<Sprite>("Sprite/tempObject/SunlightBar/sunbar3");
-        // sunBarSprite[4] = Resources.Load<Sprite>("Sprite/tempObject/SunlightBar/sunbar4");
-        // sunBarSprite[5] = Resources.Load<Sprite>("Sprite/tempObject/SunlightBar/sunbar5");
-        // sunBarSprite[6] = Resources.Load<Sprite>("Sprite/tempObject/SunlightBar/sunbar6");
-        // sunBarSprite[7] = Resources.Load<Sprite>("Sprite/tempObject/SunlightBar/sunbar7");
-        // sunBarSprite[8] = Resources.Load<Sprite>("Sprite/tempObject/SunlightBar/sunbar8");
-        // sunBarSprite[9] = Resources.Load<Sprite>("Sprite/tempObject/SunlightBar/sunbar9");
-        // sunBarSprite[10] = Resources.Load<Sprite>("Sprite/tempObject/SunlightBar/sunbar10");
-        // sunBarSprite[11] = Resources.Load<Sprite>("Sprite/tempObject/SunlightBar/sunbar11");
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         sunBarObject = transform.GetChild(0).gameObject;
@@ -86,7 +74,7 @@ public class Flower : Singleton<Flower>
         
         foreach(GameObject enemy in enemies)
         {
-            if(Vector3.Distance(enemy.transform.position, objectTransform.position) <= _attackRange) //지금은 원이지만 나중에 타원 공식으로 바꿀겁니다
+            if(Vector3.Distance(enemy.transform.position, objectTransform.position) <= _range) //지금은 원이지만 나중에 타원 공식으로 바꿀겁니다
             {
                 enemiesInRange.Add(enemy);
             }
@@ -97,7 +85,7 @@ public class Flower : Singleton<Flower>
 
     protected GameObject TargetEnemy(Transform objectTransform) //타겟할 적 정하기
     {
-        GameObject closestEnemy = null; //목표 오브젝트와 가장 가까운 적을 타겟팅합니다
+        GameObject closestEnemy = null; //목표 오브젝트와 가장 가까운 적을 타겟팅
         List<GameObject> enemiesInRange = GetEnemiesInRange(objectTransform);
 
         if(enemiesInRange.Count != 0)
@@ -121,15 +109,32 @@ public class Flower : Singleton<Flower>
         return closestEnemy;
     }
 
+    protected List<GameObject> GetFlowersInRange(Transform objectTransform) //원 범위 내에 있는 모든 아군 꽃들 찾기
+    {
+        GameObject[] flowers;
+        List<GameObject> flowersInRange = new List<GameObject>();
+        flowers = GameObject.FindGameObjectsWithTag("Flower");
+        
+        foreach(GameObject flower in flowers)
+        {
+            if(Vector3.Distance(flower.transform.position, objectTransform.position) <= _range) 
+            {
+                flowersInRange.Add(flower);
+            }
+        }
+
+        return flowersInRange;
+    }
+
     protected void ChangeSunlightPercent() 
     {
         if(inSunlight) //꽃이 햇빛에 있냐 없냐 체크 --> 햇빛 게이지 바꾸기
         {
-            sunlightPercent = (float)Mathf.Clamp(sunlightPercent + sunlightChangeRate*Time.deltaTime, 0, 100);
+            sunlightPercent = (float)Mathf.Clamp(sunlightPercent + sunlightIncreaseRate*Time.deltaTime, 0, 100);
         }
         else
         {
-            sunlightPercent = (float)Mathf.Clamp(sunlightPercent - sunlightChangeRate*Time.deltaTime, 0, 100);
+            sunlightPercent = (float)Mathf.Clamp(sunlightPercent - sunlightDecreaseRate*Time.deltaTime, 0, 100);
         }
 
         switch(sunlightPercent) 
