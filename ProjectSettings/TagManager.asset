@@ -8,6 +8,7 @@ TagManager:
   - GoalObject
   - Monster
   - Sunlight
+  - TreeHealthBar
   layers:
   - Default
   - TransparentFX
@@ -47,4 +48,16 @@ TagManager:
     locked: 0
   - name: Sunlight
     uniqueID: 3893015181
+    locked: 0
+  - name: Monster
+    uniqueID: 694732389
+    locked: 0
+  - name: Effect
+    uniqueID: 2086142991
+    locked: 0
+  - name: Flower
+    uniqueID: 2474429455
+    locked: 0
+  - name: Bar
+    uniqueID: 2619782549
     locked: 0

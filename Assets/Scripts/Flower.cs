@@ -33,7 +33,7 @@ public class Flower : Singleton<Flower>
 
     protected void InitStats(float range, float speed, float amount, float specialAttack, Sprite[] stageSprite)
     {
-        _range = range * 0.4f;
+        _range = range * 0.6f;
         _speed = speed;
         _amount = amount;
         _specialAttack = specialAttack;
