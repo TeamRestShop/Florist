@@ -54,7 +54,6 @@ public class MonsterManager : MonoBehaviour
         currentHealth = (float)Mathf.Clamp(currentHealth + value, 0, 100);
 
         float currentHealthPercent = currentHealth / maxHealth * 100;
-        Debug.Log(currentHealthPercent);
         healthBarSpriteRenderer.sprite = currentHealthPercent != 100f ? healthBarSprite[(int)currentHealthPercent/10] : healthBarSprite[10];
     }
 

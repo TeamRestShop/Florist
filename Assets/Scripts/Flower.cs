@@ -33,7 +33,7 @@ public class Flower : Singleton<Flower>
 
     protected void InitStats(float range, float speed, float amount, float specialAttack, Sprite[] stageSprite)
     {
-        _range = range * 0.6f;
+        _range = range * 6f;
         _speed = speed;
         _amount = amount;
         _specialAttack = specialAttack;
@@ -74,7 +74,7 @@ public class Flower : Singleton<Flower>
         
         foreach(GameObject enemy in enemies)
         {
-            if(Vector3.Distance(enemy.transform.position, objectTransform.position) <= _range) //지금은 원이지만 나중에 타원 공식으로 바꿀겁니다
+            if(Vector3.Distance(enemy.transform.position, objectTransform.position) <= _range) 
             {
                 enemiesInRange.Add(enemy);
             }
