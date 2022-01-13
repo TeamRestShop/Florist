@@ -6,13 +6,14 @@ public class Rose : Flower
 {
     [SerializeField] private Sprite[] stageSprite;
     [SerializeField] private GameObject attackObject; //총알? 임시
+    [SerializeField] private GameObject specialAttackObject; //바닥에서 나오는 가시
 
     private Animator ani;
     private Transform attackTransform; //자식 attack 의 transform
 
     private float attackRange = 5f;
     private float attackSpeed = 0.7f;
-    private float attackAmount = 10f;
+    public float attackAmount = 10f;
     private float specialAttack = 10f;
 
     private float currentSpecialAttack = 0f; //공격할때마다 차는 특수공격 게이지
@@ -26,8 +27,8 @@ public class Rose : Flower
         base.InitStats(attackRange, attackSpeed, attackAmount, specialAttack, stageSprite);
         base.Start();
 
-        ani = gameObject.transform.FindChild("Attack").GetComponent<Animator>();
-        attackTransform = gameObject.transform.FindChild("Attack").GetComponent<Transform>();
+        ani = gameObject.transform.Find("Attack").GetComponent<Animator>();
+        attackTransform = gameObject.transform.Find("Attack").GetComponent<Transform>();
     }
 
     private void Update()
@@ -76,7 +77,17 @@ public class Rose : Flower
 
     private void SpecialAttack()
     {
+        // if(stage == FlowerStage.Sprout)
+        // {
+        //     targetEnemy.GetComponent<Monster>().ChangeHealth(-attackAmount * 0.6f * 1.5f); 
+        // }
+        // else if(stage == FlowerStage.Flower)
+        // {
+        //     targetEnemy.GetComponent<Monster>().ChangeHealth(-attackAmount * 1.5f); 
+        // }
+        // targetEnemy.GetComponent<Monster>().Faint(3f); 
 
+        StartCoroutine("SpecialAttackLaunch");
     }
 
     IEnumerator Attack()
@@ -100,7 +111,7 @@ public class Rose : Flower
                     ani.SetTrigger("attack3");
                     break;
                 }
-                //덩굴 공격 애니메이션은 3개 중 랜덤하게 골라져요
+                //덩굴 공격 애니메이션은 3개 중 랜덤하게 골라진다
 
                 Vector2 direction = new Vector2(
                 transform.position.x - targetEnemy.transform.position.x,
@@ -117,11 +128,11 @@ public class Rose : Flower
 
                 if(stage == FlowerStage.Sprout)
                 {
-                targetEnemy.GetComponent<MonsterManager>().ChangeHealth(-attackAmount * 0.6f); 
+                    targetEnemy.GetComponent<Monster>().ChangeHealth(-attackAmount * 0.6f); 
                 }
                 else if(stage == FlowerStage.Flower)
                 {
-                targetEnemy.GetComponent<MonsterManager>().ChangeHealth(-attackAmount); 
+                    targetEnemy.GetComponent<Monster>().ChangeHealth(-attackAmount); 
                 }
 
                 currentSpecialAttack += 5f;
@@ -142,6 +153,26 @@ public class Rose : Flower
         }
 
         changeIsAttacking(false);
+        yield break;
+    }
+
+    IEnumerator SpecialAttackLaunch()
+    {
+        Debug.Log("special attack launch");
+        //rose 의 좌표와 targetEnemy 의 좌표를 지나는 직선으로 가시를 보냄
+        int thornNum = 5;
+        float range = 2f;
+        Vector3 endPos = transform.position + (targetEnemy.transform.position - transform.position).normalized * range;
+        Vector3 position;
+
+        for(int i = 0; i < thornNum; i++)
+        {
+            position = new Vector3(transform.position.x + (endPos.x - transform.position.x)/thornNum*i, transform.position.y + (endPos.y - transform.position.y)/thornNum*i, 0);
+            Debug.Log(position);
+            GameObject thorn = Instantiate(specialAttackObject, position, Quaternion.identity);
+            Destroy(thorn, 0.5f);
+            yield return new WaitForSeconds(0.1f);
+        }
         yield break;
     }
 }

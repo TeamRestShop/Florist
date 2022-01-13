@@ -9,6 +9,7 @@ TagManager:
   - Monster
   - Sunlight
   - TreeHealthBar
+  - RoseSpecialAttack
   layers:
   - Default
   - TransparentFX
@@ -29,7 +30,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Post
   - 
   - 
   - 
@@ -45,6 +46,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3995330309
     locked: 0
   - name: Sunlight
     uniqueID: 3893015181
