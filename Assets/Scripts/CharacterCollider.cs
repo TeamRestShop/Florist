@@ -1,25 +1,29 @@
 ﻿using System;
 using UnityEngine;
 
-public class CharacterCollider : MonoBehaviour
+namespace Player
 {
-    private CharacterControl _character;
-
-    private void Start()
+    // Player Character HitBox Input Check
+    public class CharacterCollider : MonoBehaviour
     {
-        _character = transform.parent.GetComponent<CharacterControl>();
-        Debug.Log(_character.name);
-    }
+        private CharacterControl _character;
 
-    // DamageCollider
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        _character.OnCollisionEnterInChildren(other);
-    }
+        private void Start()
+        {
+            _character = transform.parent.GetComponent<CharacterControl>();
+            Debug.Log(_character.name);
+        }
 
-    // ObjectCollider
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        _character.OnTriggerEnterInChildren(other);
+        // DamageCollider
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            _character.OnCollisionEnterInChildren(other);
+        }
+
+        // ObjectCollider
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            _character.OnTriggerEnterInChildren(other);
+        }
     }
 }
