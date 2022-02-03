@@ -32,7 +32,7 @@ public class SpawnMonster : Singleton<SpawnMonster> //몬스터들 랜덤으로 
     {
         
     }
-
+    
     private void changeLeftMonsters(int index)
     {
         leftMonsters[index]--;

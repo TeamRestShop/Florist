@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    private GameObject goalObject;
-    private GameObject imageObject;
-    private Vector3 targetPos;
-    private TreeManager treeScript;
-    private SpriteRenderer healthBarSpriteRenderer;
+    protected GameObject goalObject;
+    protected GameObject imageObject;
+    protected Vector3 targetPos;
+    protected TreeManager treeScript;
+    protected SpriteRenderer healthBarSpriteRenderer;
 
     private float _moveSpeed = 0.7f;
-    private float _attackAmount = 2f;
-    private float _attackSpeed = 0.7f;
+    protected float _attackAmount = 2f;
+    protected float _attackSpeed = 0.7f;
     private float _maxHealth = 100f;
-    private bool isAttacking = false;
-    private bool isFainted = false; //CC 걸렸나?
+    protected bool isAttacking = false;
+    protected bool isFainted = false; //CC 걸렸나?
     
-    private Sprite[] healthBarSprite;
-    private float currentHealth;
-    private float faintSecs;
+    protected Sprite[] healthBarSprite;
+    protected float currentHealth;
+    protected float faintSecs;
 
     protected void InitStats(float moveSpeed, float attackAmount, float attackSpeed, float maxHealth)
     {
@@ -31,8 +31,7 @@ public class Monster : MonoBehaviour
 
     public void Faint(float time)
     {
-        faintSecs = time;
-        StartCoroutine("FaintForSec");
+        
     }
 
     public void ChangeHealth(float value)
@@ -43,7 +42,7 @@ public class Monster : MonoBehaviour
         healthBarSpriteRenderer.sprite = currentHealthPercent != 100f ? healthBarSprite[(int)currentHealthPercent/10] : healthBarSprite[10];
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    protected void OnTriggerEnter2D(Collider2D col)
     {
         if(col.gameObject.tag == "RoseSpecialAttack")
         {
@@ -77,14 +76,9 @@ public class Monster : MonoBehaviour
 
         Move(targetPos);
         
-        if(!isAttacking && transform.position == targetPos)
-        {
-            isAttacking = true;
-            StartCoroutine(Attack());
-        }
     }
 
-    private void ChangeState(bool newState)
+    protected void ChangeState(bool newState)
     {
         isFainted = newState;
     }
@@ -98,27 +92,5 @@ public class Monster : MonoBehaviour
 
             //transform.position = Vector3.MoveTowards(transform.position, target, _moveSpeed * Time.deltaTime);
         }
-    }
-
-    IEnumerator Attack() 
-    {
-        while(true)
-        {
-            if(!isFainted)
-            {
-                treeScript.ChangeHealth(-_attackAmount);
-            }
-            yield return new WaitForSeconds(1f/_attackSpeed);
-        }
-    }
-    
-    IEnumerator FaintForSec()
-    {
-        ChangeState(true); 
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(100, 134, 255, 1); //임시 기절표시
-        yield return new WaitForSeconds(faintSecs);
-        ChangeState(false);
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 1);
-        yield break;
     }
 }
