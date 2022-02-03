@@ -5,6 +5,7 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
     private GameObject goalObject;
+    private GameObject imageObject;
     private Vector3 targetPos;
     private TreeManager treeScript;
     private SpriteRenderer healthBarSpriteRenderer;
@@ -62,6 +63,8 @@ public class Monster : MonoBehaviour
         healthBarSprite = Resources.LoadAll<Sprite>("Sprite/tempObject/SunlightBar");
         healthBarSpriteRenderer = transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>();
 
+        imageObject = gameObject.transform.GetChild(1).gameObject;
+
         ChangeHealth(0);
     }
 
@@ -90,10 +93,10 @@ public class Monster : MonoBehaviour
     {
         if(!isFainted)
         {
-            if(target.x > transform.position.x) transform.localRotation = Quaternion.Euler(0, 180, 0);
-            else transform.localRotation = Quaternion.Euler(0, 0, 0);
+            if(target.x > transform.position.x) imageObject.transform.localRotation = Quaternion.Euler(0, 180, 0);
+            else imageObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
 
-            transform.position = Vector3.MoveTowards(transform.position, target, _moveSpeed * Time.deltaTime);
+            //transform.position = Vector3.MoveTowards(transform.position, target, _moveSpeed * Time.deltaTime);
         }
     }
 

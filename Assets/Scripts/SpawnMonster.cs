@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class SpawnMonster : Singleton<SpawnMonster> //몬스터들 랜덤으로 스폰해주는거
 {
@@ -60,7 +61,7 @@ public class SpawnMonster : Singleton<SpawnMonster> //몬스터들 랜덤으로 
                     break;
             }
 
-            Instantiate(monsterTypes[type], spawnPos, Quaternion.identity);
+            PhotonNetwork.Instantiate(monsterTypes[type].name, spawnPos, Quaternion.identity);
             changeLeftMonsters(type);
 
             yield return new WaitForSeconds(1f/spawnRate);

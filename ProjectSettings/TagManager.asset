@@ -26,7 +26,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Obstacle
   - 
   - 
   - 
@@ -55,6 +55,9 @@ TagManager:
     locked: 0
   - name: Monster
     uniqueID: 694732389
+    locked: 0
+  - name: Obstacle
+    uniqueID: 822760895
     locked: 0
   - name: Effect
     uniqueID: 2086142991
