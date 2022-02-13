@@ -17,13 +17,13 @@ namespace Player
         // DamageCollider
         private void OnCollisionEnter2D(Collision2D other)
         {
-            _character.OnCollisionEnterInChildren(other);
+            _character.damageCollider.OnNext(other);
         }
 
         // ObjectCollider
         private void OnTriggerEnter2D(Collider2D other)
         {
-            _character.OnTriggerEnterInChildren(other);
+            _character.objectCollider.OnNext(other);
         }
     }
 }
