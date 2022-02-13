@@ -102,9 +102,7 @@ namespace Player
                 .RepeatUntilDisable(this)
                 .Subscribe(_ =>
                 {
-                    /* 스킬 준비 */
                     currentState.Value = State.Skill;
-                    Debug.LogError("Skill EEEE");
                 }).AddTo(this);
 
             skillStream.Where(_ => Input.GetKeyDown(KeyCode.E))
@@ -113,15 +111,6 @@ namespace Player
                     /* 스킬 시전 */
                     currentState.Value = State.Idle;
                 }).AddTo(this);
-
-            damageCollider.Subscribe(_ =>
-            {
-                /* 피해 */
-            });
-            objectCollider.Subscribe(_ =>
-            {
-                /* 오브젝트 교환 */
-            });
         }
 
         public class IdleState : IState<CharacterControl>
@@ -130,7 +119,7 @@ namespace Player
 
             public void Enter(CharacterControl t)
             {
-                // ToDo : 애니메이션 재생
+                t._animator.SetInteger(MainState, (int)State.Idle);
             }
 
             public void Exit(CharacterControl t)
@@ -143,7 +132,7 @@ namespace Player
             // ToDo : 상태별 동작 설정
             public void Enter(CharacterControl t)
             {
-                // ToDo : 애니메이션 재생
+                t._animator.SetInteger(MainState, (int)State.Skill);
             }
 
             public void Exit(CharacterControl t)
@@ -156,7 +145,7 @@ namespace Player
             // ToDo : 상태별 동작 설정
             public void Enter(CharacterControl t)
             {
-                // ToDo : 애니메이션 재생
+                t._animator.SetInteger(MainState, (int)State.Walk);
             }
 
             public void Exit(CharacterControl t)
