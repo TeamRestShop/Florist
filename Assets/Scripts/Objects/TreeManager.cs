@@ -26,5 +26,10 @@ public class TreeManager : Singleton<TreeManager>
     {
         health = (float)Mathf.Clamp(health + value, 0, 100);
         healthBar.value = (float)health/maxHealth;
+        
+        if(health <= 0)
+        {
+            GameManager.Instance.GameOver();
+        }
     }
 }

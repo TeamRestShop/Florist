@@ -115,8 +115,6 @@ namespace Player
 
         public class IdleState : IState<CharacterControl>
         {
-            // ToDo : 상태별 동작 설정
-
             public void Enter(CharacterControl t)
             {
                 t._animator.SetInteger(MainState, (int)State.Idle);
@@ -129,7 +127,6 @@ namespace Player
 
         public class SkillState : IState<CharacterControl>
         {
-            // ToDo : 상태별 동작 설정
             public void Enter(CharacterControl t)
             {
                 t._animator.SetInteger(MainState, (int)State.Skill);
@@ -142,7 +139,6 @@ namespace Player
 
         public class WalkState : IState<CharacterControl>
         {
-            // ToDo : 상태별 동작 설정
             public void Enter(CharacterControl t)
             {
                 t._animator.SetInteger(MainState, (int)State.Walk);
