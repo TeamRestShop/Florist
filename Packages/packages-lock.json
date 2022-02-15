@@ -1,12 +1,5 @@
 {
   "dependencies": {
-    "com.neuecc.unirx": {
-      "version": "https://github.com/starikcetin/unirx.git#f93af89f2aafeccfc7aff9dee2cecc6d60ede06b",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "f93af89f2aafeccfc7aff9dee2cecc6d60ede06b"
-    },
     "com.unity.2d.animation": {
       "version": "5.0.7",
       "depth": 0,
@@ -132,6 +125,13 @@
       "dependencies": {
         "com.unity.modules.physics": "1.0.0"
       },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.quicksearch": {
+      "version": "2.0.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
