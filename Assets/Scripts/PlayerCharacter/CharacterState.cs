@@ -3,7 +3,7 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 
-namespace Player
+namespace PlayerCharacter
 {
 // Define Player Character FSM State 
     public partial class CharacterControl
@@ -55,7 +55,9 @@ namespace Player
                 transform.Translate(move);
             }).AddTo(this);
 
-            idleStream.Merge(walkStream).Where(_ => Input.GetKeyDown(KeyCode.Space))
+            objectCollider.Where(col => 
+                    col.CompareTag("Flower") && Input.GetKeyDown(KeyCode.Space) && 
+                    (currentState.Value == State.Idle || currentState.Value == State.Walk))
                 .ThrottleFirst(TimeSpan.FromSeconds(1f)).Subscribe(_ =>
                 {
                     /* 줍기 */
@@ -78,19 +80,28 @@ namespace Player
 
             var mouseLeftDown = idleStream.Merge(walkStream).Where(_ => Input.GetMouseButtonDown(0));
             var mouseLeftUp = idleStream.Merge(walkStream).Where(_ => Input.GetMouseButtonUp(0));
+            
             var mouseRightDown = idleStream.Merge(walkStream).Where(_ => Input.GetMouseButtonDown(1));
 
             var objectThrow = idleStream.Merge(walkStream)
-                .SkipUntil(mouseLeftDown).TakeUntil(mouseLeftUp)
-                .RepeatUntilDisable(this).Subscribe(_ =>
-                {
-                    /* 오브젝트 던지기 조준 */
-                    Debug.Log("[Act] 던지기 조준");
-                }).AddTo(this);
+                .SkipUntil(mouseLeftDown).TakeUntil(mouseLeftUp).RepeatUntilDisable(this);
 
+            objectThrow.Subscribe(_ =>
+            {
+                if (Input.GetMouseButtonUp(0)) Debug.Log("asdffasfdsfsd");
+                /* 오브젝트 던지기 조준 */
+                Debug.Log("[Act] 던지기 조준");
+            }).AddTo(this);
+            
+            mouseLeftUp.Subscribe(_ =>
+            {
+                /* 오브젝트 던지기 실행 */
+                Debug.Log("[Act] 던지기 실행");
+            }).AddTo(this);
+            
             mouseRightDown.Subscribe(_ =>
             {
-                objectThrow.Dispose(); /* 던지기 취소 */
+                // objectThrow.DoOnCompleted(); /* 던지기 취소 */
                 Debug.Log("[Act] 던지기 취소");
             }).AddTo(this);
 

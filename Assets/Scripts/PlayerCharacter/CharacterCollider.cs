@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Player
+namespace PlayerCharacter
 {
     // Player Character HitBox Input Check
     public class CharacterCollider : MonoBehaviour
@@ -15,7 +15,7 @@ namespace Player
         }
 
         // DamageCollider
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnCollisionStay2D(Collision2D other)
         {
             _character.damageCollider.OnNext(other);
         }

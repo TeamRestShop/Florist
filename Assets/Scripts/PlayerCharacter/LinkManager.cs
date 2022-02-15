@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Player
+namespace PlayerCharacter
 {
     // Player and Player Character Link and Switch System
     public class LinkManager : Singleton<LinkManager>

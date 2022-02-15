@@ -2,7 +2,7 @@
 using UniRx;
 using UnityEngine;
 
-namespace Player
+namespace PlayerCharacter
 {
     // Player Character Control System
     public partial class CharacterControl : MonoBehaviour

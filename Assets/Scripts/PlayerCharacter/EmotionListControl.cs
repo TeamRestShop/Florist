@@ -3,7 +3,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Player
+namespace PlayerCharacter
 {
     // Player Emotion Input
     public class EmotionListControl : MonoBehaviour, IBeginDragHandler, IEndDragHandler

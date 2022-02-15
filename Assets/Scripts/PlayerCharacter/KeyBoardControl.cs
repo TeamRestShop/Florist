@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Player
+namespace PlayerCharacter
 {
     public class PlayerKeyBoardControl
     {
