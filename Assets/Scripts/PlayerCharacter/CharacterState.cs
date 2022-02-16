@@ -17,6 +17,8 @@ namespace PlayerCharacter
 
         public readonly ReactiveProperty<State> currentState = new ReactiveProperty<State>(State.Idle);
         private readonly IState<CharacterControl>[] states = {new IdleState(), new SkillState(), new WalkState()};
+        private const float RadianToDegree = 180 / Mathf.PI;
+        [SerializeField] float speed = 5f;
 
         private void StateInit()
         {
@@ -56,11 +58,17 @@ namespace PlayerCharacter
             }).AddTo(this);
 
             objectCollider.Where(col => 
-                    col.CompareTag("Flower") && Input.GetKeyDown(KeyCode.Space) && 
+                    col.CompareTag("Flower") && Input.GetKey(KeyCode.Space) && 
                     (currentState.Value == State.Idle || currentState.Value == State.Walk))
-                .ThrottleFirst(TimeSpan.FromSeconds(1f)).Subscribe(_ =>
+                .ThrottleFirst(TimeSpan.FromSeconds(1f)).Subscribe(flower =>
                 {
                     /* 줍기 */
+                    if (!_havingFlower)
+                    {
+                        _havingFlower = flower.GetComponent<Flower>();
+                        _havingFlower.transform.parent = transform;
+                        _havingFlower.transform.localPosition = new Vector3(0, 0.3f, 0);
+                    }
                     Debug.Log("[Act] 줍기");
                 }).AddTo(this);
 
@@ -88,20 +96,30 @@ namespace PlayerCharacter
 
             objectThrow.Subscribe(_ =>
             {
-                if (Input.GetMouseButtonUp(0)) Debug.Log("asdffasfdsfsd");
-                /* 오브젝트 던지기 조준 */
-                Debug.Log("[Act] 던지기 조준");
+                _arrowSprite.enabled = true;
+                PointArrow(CurrentPointDirection());
             }).AddTo(this);
             
             mouseLeftUp.Subscribe(_ =>
             {
                 /* 오브젝트 던지기 실행 */
-                Debug.Log("[Act] 던지기 실행");
+                if (_havingFlower)
+                {
+                    // _havingFlower.GetComponent<Rigidbody2D>()
+                    //     .AddForce(CurrentPointDirection() * 10, ForceMode2D.Impulse);
+                    _havingFlower.GetComponent<Rigidbody2D>().AddForce(CurrentPointDirection() * speed, ForceMode2D.Impulse);
+                    Debug.Log($"{CurrentPointDirection() * speed}");
+                    _havingFlower.transform.parent = null;
+                    _havingFlower = null;
+                    Debug.Log("[Act] 던지기 실행");
+                }
+
+                _arrowSprite.enabled = false;
             }).AddTo(this);
             
             mouseRightDown.Subscribe(_ =>
             {
-                // objectThrow.DoOnCompleted(); /* 던지기 취소 */
+                _arrowSprite.enabled = false;
                 Debug.Log("[Act] 던지기 취소");
             }).AddTo(this);
 
@@ -122,6 +140,24 @@ namespace PlayerCharacter
                     /* 스킬 시전 */
                     currentState.Value = State.Idle;
                 }).AddTo(this);
+        }
+
+        private Vector2 CurrentPointDirection()
+        {
+            var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var dir = mousePos - transform.position;
+
+            return dir;
+        }
+        
+        private void PointArrow(Vector2 direction)
+        {
+            var pos = _arrowTransform.localScale;
+            pos.x = Mathf.Min(2, direction.magnitude);
+            _arrowTransform.localScale = pos;
+
+            var z = Mathf.Atan2(direction.y, direction.x) * RadianToDegree;
+            _arrowTransform.localRotation = Quaternion.Euler(0,0, z);
         }
 
         public class IdleState : IState<CharacterControl>

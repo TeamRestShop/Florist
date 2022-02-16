@@ -15,11 +15,19 @@ namespace PlayerCharacter
         private static readonly int MainState = Animator.StringToHash("MainState");
         private Animator _animator;
         private PhotonView _photonView;
+        private SpriteRenderer _arrowSprite;
+        private Transform _arrowTransform;
+
+        private Flower _havingFlower;
         
         private void Start()
         {
             _animator = GetComponent<Animator>();
             _photonView = GetComponent<PhotonView>();
+            _arrowSprite = transform.GetChild(2).GetComponent<SpriteRenderer>();
+            _arrowTransform = _arrowSprite.transform;
+            _arrowSprite.enabled = false;
+            _havingFlower = null;
 
             if (_photonView.IsMine)
             {
@@ -32,6 +40,7 @@ namespace PlayerCharacter
                 objectCollider.Subscribe(_ =>
                 {
                     /* 오브젝트 교환 */
+                    Debug.Log("으아아아아아아아");
                 });
             }
             /*

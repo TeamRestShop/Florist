@@ -57,13 +57,13 @@ public class Flower : Singleton<Flower>
     {
         ChangeSunlightPercent();
 
-        //임시
-        if(Input.GetMouseButtonDown(0))
-        {
-            Vector3 mousePose = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = new Vector3(mousePose.x, mousePose.y, 0);
-        }
-        //
+        // //임시
+        // if(Input.GetMouseButtonDown(0))
+        // {
+        //     Vector3 mousePose = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //     transform.position = new Vector3(mousePose.x, mousePose.y, 0);
+        // }
+        // //
     }
 
     protected List<GameObject> GetEnemiesInRange(Transform objectTransform) //원 범위 내에 있는 모든 적들 찾기
