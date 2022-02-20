@@ -10,6 +10,7 @@ TagManager:
   - Sunlight
   - TreeHealthBar
   - RoseSpecialAttack
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -52,6 +53,9 @@ TagManager:
     locked: 0
   - name: Sunlight
     uniqueID: 3893015181
+    locked: 0
+  - name: Character
+    uniqueID: 3158770113
     locked: 0
   - name: Monster
     uniqueID: 694732389

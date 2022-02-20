@@ -18,9 +18,9 @@ public class Matching : MonoBehaviourPunCallbacks
     {
         playerNumText.text = $"{PhotonNetwork.CurrentRoom.PlayerCount} / {maxPlayers}";
 
-        if(PhotonNetwork.CurrentRoom.PlayerCount == maxPlayers)
+        // if(PhotonNetwork.CurrentRoom.PlayerCount == maxPlayers)
         {
-            PhotonNetwork.CurrentRoom.IsOpen = false;
+            // PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.LoadLevel("ObjectScene");
         }
     }

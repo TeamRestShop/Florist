@@ -90,7 +90,7 @@ public class Monster : MonoBehaviour
             if(target.x > transform.position.x) imageObject.transform.localRotation = Quaternion.Euler(0, 180, 0);
             else imageObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
 
-            //transform.position = Vector3.MoveTowards(transform.position, target, _moveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, target, _moveSpeed * Time.deltaTime);
         }
     }
 }
