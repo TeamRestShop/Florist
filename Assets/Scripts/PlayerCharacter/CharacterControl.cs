@@ -32,17 +32,19 @@ namespace PlayerCharacter
             if (_photonView.IsMine)
             {
                 StateInit();
+            }
 
-                damageCollider.Subscribe(_ =>
+            damageCollider.Subscribe(_ =>
                 {
                     /* 피해 */
                 });
                 objectCollider.Subscribe(_ =>
                 {
                     /* 오브젝트 교환 */
-                    Debug.Log("으아아아아아아아");
+                    if(_photonView.IsMine)
+                        Debug.Log("으아아아아아아아");
                 });
-            }
+            
             /*
              * Enter -> ReactiveProperty에서
              * Update -> stateStream

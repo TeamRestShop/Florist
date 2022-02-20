@@ -64,7 +64,7 @@ public class SpawnMonster : Singleton<SpawnMonster> //몬스터들 랜덤으로 
             PhotonNetwork.Instantiate(monsterTypes[type].name, spawnPos, Quaternion.identity);
             changeLeftMonsters(type);
 
-            yield return new WaitForSeconds(1f/spawnRate);
+            yield return new WaitForSeconds(1f/spawnRate * PhotonNetwork.CurrentRoom.PlayerCount);
         }
     }
 }

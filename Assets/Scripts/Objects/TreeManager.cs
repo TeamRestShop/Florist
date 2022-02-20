@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TreeManager : Singleton<TreeManager>
+public class TreeManager : Singleton<TreeManager>, IPunObservable 
 {
     private float maxHealth = 100f;
     public float health {get;set;} //현재체력
@@ -12,7 +13,7 @@ public class TreeManager : Singleton<TreeManager>
 
     private void Start()
     {
-        health = 50f;
+        health = maxHealth;
         healthBar = GameObject.FindGameObjectWithTag("TreeHealthBar").GetComponent<Slider>();
         healthBar.value = (float)health/maxHealth;
     }
@@ -30,6 +31,21 @@ public class TreeManager : Singleton<TreeManager>
         if(health <= 0)
         {
             GameManager.Instance.GameOver();
+        }
+    }
+    
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            // We own this player: send the others our data
+            stream.SendNext(health);
+        }
+        else
+        {
+            // Network player, receive data
+            health = (float)stream.ReceiveNext();
+            ChangeHealth(health);
         }
     }
 }

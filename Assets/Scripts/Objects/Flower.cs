@@ -9,7 +9,7 @@ public enum FlowerStage
     Flower
 }
 
-public class Flower : Singleton<Flower>
+public class Flower : MonoBehaviour
 {
     public FlowerStage stage {get; set;} //씨앗, 새싹, 꽃
 

@@ -17,11 +17,11 @@ public class CharacterSpawner : MonoBehaviour
     [SerializeField] private RandomPositionRange spawnArea;
     [SerializeField] private GameObject characterPrefab;
 
-    private void SpawnCharacter()
+    private void Start()
     {
         var spawnPosition = new Vector2(Random.Range(spawnArea.MinX, spawnArea.MaxX),
             Random.Range(spawnArea.MinY, spawnArea.MaxY));
 
-        PhotonNetwork.Instantiate($"Prefabs/{characterPrefab.name}", spawnPosition, Quaternion.identity);
+        PhotonNetwork.Instantiate($"Prefab/{characterPrefab.name}", spawnPosition, Quaternion.identity);
     }
 }
