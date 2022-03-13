@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Flower
+  - GoalObject
+  - Monster
+  - Sunlight
+  - TreeHealthBar
+  - RoseSpecialAttack
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -20,11 +27,11 @@ TagManager:
   - 
   - 
   - 
+  - Obstacle
   - 
   - 
   - 
-  - 
-  - 
+  - Post
   - 
   - 
   - 
@@ -40,4 +47,28 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3995330309
+    locked: 0
+  - name: Sunlight
+    uniqueID: 3893015181
+    locked: 0
+  - name: Character
+    uniqueID: 3158770113
+    locked: 0
+  - name: Monster
+    uniqueID: 694732389
+    locked: 0
+  - name: Obstacle
+    uniqueID: 822760895
+    locked: 0
+  - name: Effect
+    uniqueID: 2086142991
+    locked: 0
+  - name: Flower
+    uniqueID: 2474429455
+    locked: 0
+  - name: Bar
+    uniqueID: 2619782549
     locked: 0
