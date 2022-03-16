@@ -32,12 +32,12 @@ public class Monster : MonoBehaviour
     public IEnumerator Faint()
     {
         isFainted = true;
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 1, 1);
+        // gameObject.GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 1, 1);
 
         yield return new WaitForSeconds(faintSecs);
         
         isFainted = false;
-        gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+        // gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
         yield break;
     }
 
