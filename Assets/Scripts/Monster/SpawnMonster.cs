@@ -7,8 +7,8 @@ public class SpawnMonster : Singleton<SpawnMonster> //몬스터들 랜덤으로 
 {
     [SerializeField] private GameObject[] monsterTypes;
 
-    private const float xEdge = 6f; //몬스터가 스폰할수있는 공간 모서리 x 좌표
-    private const float yEdge = 5f; //몬스터가 스폰할수있는 공간 모서리 y 좌표
+    private const float xEdge = 8f; //몬스터가 스폰할수있는 공간 모서리 x 좌표
+    private const float yEdge = 6f; //몬스터가 스폰할수있는 공간 모서리 y 좌표
 
     private int[] leftMonsters; //각 몬스터 타입마다 몇마리 남았는지; 레벨마다 나오는 몬스터 마릿수 다르기 때문에
     private float spawnRate = 0.5f; //1초에 몇마리 스폰하는지
@@ -64,7 +64,7 @@ public class SpawnMonster : Singleton<SpawnMonster> //몬스터들 랜덤으로 
             PhotonNetwork.Instantiate(monsterTypes[type].name, spawnPos, Quaternion.identity);
             changeLeftMonsters(type);
 
-            yield return new WaitForSeconds(1f/spawnRate * PhotonNetwork.CurrentRoom.PlayerCount);
+            yield return new WaitForSeconds(2f/spawnRate * PhotonNetwork.CurrentRoom.PlayerCount);
         }
     }
 }

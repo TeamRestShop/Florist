@@ -19,13 +19,6 @@ public class TestMonster : Monster
         }
     }
 
-    public void Faint(float time)
-    {
-        base.Faint(time);
-        faintSecs = time;
-        StartCoroutine("FaintForSec");
-    }
-
     protected void ChangeState(bool newState)
     {
         base.ChangeState(newState);
@@ -36,9 +29,9 @@ public class TestMonster : Monster
         base.ChangeHealth(value);
     }
 
-    protected void OnTriggerEnter2D(Collider2D col)
+    public void OnTriggerStay2D(Collider2D col)
     {
-        base.OnTriggerEnter2D(col);
+        base.OnTriggerStay2D(col);
     }
 
     IEnumerator Attack() 

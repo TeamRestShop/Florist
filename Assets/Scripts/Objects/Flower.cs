@@ -33,7 +33,7 @@ public class Flower : MonoBehaviour
 
     protected void InitStats(float range, float speed, float amount, float specialAttack, Sprite[] stageSprite)
     {
-        _range = range * 6f;
+        _range = range * 0.5f;
         _speed = speed;
         _amount = amount;
         _specialAttack = specialAttack;

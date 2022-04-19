@@ -13,7 +13,7 @@ public class Rose : Flower
 
     private float attackRange = 5f;
     private float attackSpeed = 0.7f;
-    public float attackAmount = 10f;
+    public float attackAmount = 55f;
     private float specialAttack = 10f;
 
     private float currentSpecialAttack = 0f; //공격할때마다 차는 특수공격 게이지
@@ -160,8 +160,8 @@ public class Rose : Flower
     {
         Debug.Log("special attack launch");
         //rose 의 좌표와 targetEnemy 의 좌표를 지나는 직선으로 가시를 보냄
-        int thornNum = 5;
-        float range = 2f;
+        int thornNum = 7;
+        float range = 3f;
         Vector3 endPos = transform.position + (targetEnemy.transform.position - transform.position).normalized * range;
         Vector3 position;
 
@@ -170,8 +170,9 @@ public class Rose : Flower
             position = new Vector3(transform.position.x + (endPos.x - transform.position.x)/thornNum*i, transform.position.y + (endPos.y - transform.position.y)/thornNum*i, 0);
             Debug.Log(position);
             GameObject thorn = Instantiate(specialAttackObject, position, Quaternion.identity);
-            Destroy(thorn, 0.5f);
-            yield return new WaitForSeconds(0.1f);
+            Destroy(thorn, 0.8f);
+            targetEnemy.GetComponent<Monster>().StartFaint();
+            yield return new WaitForSeconds(0.05f);
         }
         yield break;
     }

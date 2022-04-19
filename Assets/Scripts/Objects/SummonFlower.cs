@@ -14,16 +14,7 @@ public class SummonFlower : MonoBehaviour
     void Update()
     {
         //임시
-        if(Input.GetMouseButtonDown(1))
-        {
-            Vector3 mousePose = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Instantiate(flowerObject, new Vector3(mousePose.x, mousePose.y, 0), Quaternion.identity);
-        }
-        if(Input.GetKeyDown("space"))
-        {
-            Vector3 mousePose = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Instantiate(monsterObject, new Vector3(mousePose.x, mousePose.y, 0), Quaternion.identity);
-        }
+        
         //
     }
 }

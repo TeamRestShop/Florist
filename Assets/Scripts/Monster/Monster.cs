@@ -19,7 +19,7 @@ public class Monster : MonoBehaviour
     
     protected Sprite[] healthBarSprite;
     protected float currentHealth;
-    protected float faintSecs;
+    protected float faintSecs = 1.5f;
 
     protected void InitStats(float moveSpeed, float attackAmount, float attackSpeed, float maxHealth)
     {
@@ -29,9 +29,22 @@ public class Monster : MonoBehaviour
         _maxHealth = maxHealth;
     }
 
-    public void Faint(float time)
+    public IEnumerator Faint()
     {
+        isFainted = true;
+        // gameObject.GetComponent<SpriteRenderer>().color = new Color(0.5f, 0.5f, 1, 1);
+
+        yield return new WaitForSeconds(faintSecs);
         
+        isFainted = false;
+        // gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+        yield break;
+    }
+
+    public void StartFaint()
+    {
+        faintSecs = 1.5f;
+        StartCoroutine("Faint");
     }
 
     public void ChangeHealth(float value)
@@ -42,11 +55,12 @@ public class Monster : MonoBehaviour
         healthBarSpriteRenderer.sprite = currentHealthPercent != 100f ? healthBarSprite[(int)currentHealthPercent/10] : healthBarSprite[10];
     }
 
-    protected void OnTriggerEnter2D(Collider2D col)
+    public void OnTriggerStay2D(Collider2D col)
     {
         if(col.gameObject.tag == "RoseSpecialAttack")
         {
-            Faint(1.5f);
+            StartCoroutine("Faint");
+            faintSecs = 1.5f;
             ChangeHealth(-(col.gameObject.transform.parent.gameObject.GetComponent<Rose>().attackAmount) * 1.5f);
         }
     }
